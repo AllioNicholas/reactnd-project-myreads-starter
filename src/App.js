@@ -1,116 +1,72 @@
 import React from 'react'
-// import * as BooksAPI from './BooksAPI'
+import * as BooksAPI from './BooksAPI'
 import './App.css'
 import { Route } from 'react-router-dom'
 
 import MyReadsBookShelves from './MyReadsBookShelves'
 import MyReadsSearchPage from './MyReadsSearchPage'
 
-const bookShelves =[
-  {
-    title: 'Currently Reading',
-    books: [
-      {
-        bookCover: {
-          width: 128,
-          height: 193,
-          backgroundImage: 'http://books.google.com/books/content?id=PGR2AwAAQBAJ&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE73-GnPVEyb7MOCxDzOYF1PTQRuf6nCss9LMNOSWBpxBrz8Pm2_mFtWMMg_Y1dx92HT7cUoQBeSWjs3oEztBVhUeDFQX6-tWlWz1-feexS0mlJPjotcwFqAg6hBYDXuK_bkyHD-y&source=gbs_api'
-        },
-        title: 'To Kill a Mockingbird',
-        authors: 'Harper Lee'
-      },
-      {
-        bookCover: {
-          width: 128,
-          height: 188,
-          backgroundImage: 'http://books.google.com/books/content?id=yDtCuFHXbAYC&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE72RRiTR6U5OUg3IY_LpHTL2NztVWAuZYNFE8dUuC0VlYabeyegLzpAnDPeWxE6RHi0C2ehrR9Gv20LH2dtjpbcUcs8YnH5VCCAH0Y2ICaKOTvrZTCObQbsfp4UbDqQyGISCZfGN&source=gbs_api'
-        },
-        title: 'Ender\'s Game',
-        authors: 'Orson Scott Card'
-      },
-      {
-        bookCover: {
-          width: 128,
-          height: 193,
-          backgroundImage: 'http://books.google.com/books/content?id=uu1mC6zWNTwC&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE73pGHfBNSsJG9Y8kRBpmLUft9O4BfItHioHolWNKOdLavw-SLcXADy3CPAfJ0_qMb18RmCa7Ds1cTdpM3dxAGJs8zfCfm8c6ggBIjzKT7XR5FIB53HHOhnsT7a0Cc-PpneWq9zX&source=gbs_api'
-        },
-        title: '1776',
-        authors: 'David McCullough'
-      }
-    ]
-  },
-  {
-    title: 'Want to Read',
-    books: [
-      {
-        bookCover: {
-          width: 128,
-          height: 193,
-          backgroundImage: 'http://books.google.com/books/content?id=PGR2AwAAQBAJ&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE73-GnPVEyb7MOCxDzOYF1PTQRuf6nCss9LMNOSWBpxBrz8Pm2_mFtWMMg_Y1dx92HT7cUoQBeSWjs3oEztBVhUeDFQX6-tWlWz1-feexS0mlJPjotcwFqAg6hBYDXuK_bkyHD-y&source=gbs_api'
-        },
-        title: 'To Kill a Mockingbird',
-        authors: 'Harper Lee'
-      },
-      {
-        bookCover: {
-          width: 128,
-          height: 188,
-          backgroundImage: 'http://books.google.com/books/content?id=yDtCuFHXbAYC&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE72RRiTR6U5OUg3IY_LpHTL2NztVWAuZYNFE8dUuC0VlYabeyegLzpAnDPeWxE6RHi0C2ehrR9Gv20LH2dtjpbcUcs8YnH5VCCAH0Y2ICaKOTvrZTCObQbsfp4UbDqQyGISCZfGN&source=gbs_api'
-        },
-        title: 'Ender\'s Game',
-        authors: 'Orson Scott Card'
-      },
-      {
-        bookCover: {
-          width: 128,
-          height: 193,
-          backgroundImage: 'http://books.google.com/books/content?id=uu1mC6zWNTwC&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE73pGHfBNSsJG9Y8kRBpmLUft9O4BfItHioHolWNKOdLavw-SLcXADy3CPAfJ0_qMb18RmCa7Ds1cTdpM3dxAGJs8zfCfm8c6ggBIjzKT7XR5FIB53HHOhnsT7a0Cc-PpneWq9zX&source=gbs_api'
-        },
-        title: '1776',
-        authors: 'David McCullough'
-      }
-    ]
-  },
-  {
-    title: 'Read',
-    books: [
-      {
-        bookCover: {
-          width: 128,
-          height: 193,
-          backgroundImage: 'http://books.google.com/books/content?id=PGR2AwAAQBAJ&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE73-GnPVEyb7MOCxDzOYF1PTQRuf6nCss9LMNOSWBpxBrz8Pm2_mFtWMMg_Y1dx92HT7cUoQBeSWjs3oEztBVhUeDFQX6-tWlWz1-feexS0mlJPjotcwFqAg6hBYDXuK_bkyHD-y&source=gbs_api'
-        },
-        title: 'To Kill a Mockingbird',
-        authors: 'Harper Lee'
-      },
-      {
-        bookCover: {
-          width: 128,
-          height: 188,
-          backgroundImage: 'http://books.google.com/books/content?id=yDtCuFHXbAYC&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE72RRiTR6U5OUg3IY_LpHTL2NztVWAuZYNFE8dUuC0VlYabeyegLzpAnDPeWxE6RHi0C2ehrR9Gv20LH2dtjpbcUcs8YnH5VCCAH0Y2ICaKOTvrZTCObQbsfp4UbDqQyGISCZfGN&source=gbs_api'
-        },
-        title: 'Ender\'s Game',
-        authors: 'Orson Scott Card'
-      },
-      {
-        bookCover: {
-          width: 128,
-          height: 193,
-          backgroundImage: 'http://books.google.com/books/content?id=uu1mC6zWNTwC&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE73pGHfBNSsJG9Y8kRBpmLUft9O4BfItHioHolWNKOdLavw-SLcXADy3CPAfJ0_qMb18RmCa7Ds1cTdpM3dxAGJs8zfCfm8c6ggBIjzKT7XR5FIB53HHOhnsT7a0Cc-PpneWq9zX&source=gbs_api'
-        },
-        title: '1776',
-        authors: 'David McCullough'
-      }
-    ]
-  },
-]
-
 class BooksApp extends React.Component {
   state = {
-    bookShelves: []
+    currentlyReadingShelf: [],
+    wantToReadShelf: [],
+    readShelf: [],
+  }
+
+  componentDidMount() {
+    BooksAPI.getAll()
+    .then((books) => {
+      let currently = []
+      let wantTo = []
+      let read = []
+
+      books.map((book) => {
+        const newBook = {}
+
+        newBook.id= book.id
+        newBook.title = book.title
+        newBook.authors = book.authors
+        newBook.shelf = book.shelf
+        newBook.bookCover = {
+          backgroundImage: book.imageLinks.thumbnail,
+          width: 128,
+          heigth: 193
+        }
+
+        if (book.shelf === 'currentlyReading') {
+          currently.push(newBook)
+        } else if (book.shelf === 'wantToRead') {
+          wantTo.push(newBook)
+        } else if (book.shelf === 'read') {
+          read.push(newBook)
+        }
+      })
+
+      this.setState((prevState) => ({
+          currentlyReadingShelf: prevState.currentlyReadingShelf.concat(currently),
+          wantToReadShelf: prevState.wantToReadShelf.concat(wantTo),
+          readShelf: prevState.readShelf.concat(read)
+        }))
+    })
   }
 
   render() {
+    const { currentlyReadingShelf, wantToReadShelf, readShelf } = this.state
+    const bookShelves = [
+      {
+        title: 'Currently Reading',
+        books: currentlyReadingShelf
+      },
+      {
+        title: 'Want To Read',
+        books: wantToReadShelf
+      },
+      {
+        title: 'Read',
+        books: readShelf
+      }
+    ]
+
     return (
       <div className="app">
         <Route path='/search' component={MyReadsSearchPage} />
