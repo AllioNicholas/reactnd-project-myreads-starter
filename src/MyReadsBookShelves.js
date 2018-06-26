@@ -8,6 +8,10 @@ class MyReadsBookShelves extends Component {
     bookShelves: PropTypes.array.isRequired
   }
 
+  shelfChanged(event) {
+    this.props.onShelfChanged(event.target.value)
+  }
+
   render() {
     const { bookShelves } = this.props
 
@@ -19,7 +23,11 @@ class MyReadsBookShelves extends Component {
         <div className="list-books-content">
           <div>
             {bookShelves.map((bookShelf, index) => (
-              <Bookshelf key={index} title={bookShelf.title} books={bookShelf.books}/>
+              <Bookshelf
+                key={index}
+                title={bookShelf.title}
+                books={bookShelf.books}
+                onShelfChanged={this.shelfChanged} />
             ))}
           </div>
         </div>

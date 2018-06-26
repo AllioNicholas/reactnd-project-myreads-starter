@@ -13,6 +13,12 @@ class BooksApp extends React.Component {
     readShelf: [],
   }
 
+  // State handle methods
+  shelfChanged(event) {
+    console.log(event.target.value)
+  }
+
+  // Lifecycle methods
   componentDidMount() {
     BooksAPI.getAll()
     .then((books) => {
@@ -32,6 +38,7 @@ class BooksApp extends React.Component {
           width: 128,
           height: 193
         }
+
         if (book.shelf === 'currentlyReading') {
           currently.push(newBook)
         } else if (book.shelf === 'wantToRead') {
@@ -39,6 +46,7 @@ class BooksApp extends React.Component {
         } else if (book.shelf === 'read') {
           read.push(newBook)
         }
+
       })
 
       this.setState((prevState) => ({
@@ -70,7 +78,9 @@ class BooksApp extends React.Component {
       <div className="app">
         <Route path='/search' component={MyReadsSearchPage} />
         <Route exact path='/' render={() => (
-          <MyReadsBookShelves bookShelves={bookShelves}/>
+          <MyReadsBookShelves
+            bookShelves={bookShelves}
+            onShelfChanged={this.shelfChanged} />
         )} />
       </div>
     )

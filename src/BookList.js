@@ -7,6 +7,10 @@ class BookList extends Component {
     books: PropTypes.array.isRequired
   }
 
+  shelfChanged(event) {
+    this.props.onShelfChanged(event.target.value)
+  }
+
   render() {
     const { books } = this.props
 
@@ -14,7 +18,7 @@ class BookList extends Component {
       <ol className="books-grid">
       {books.map((book, index) => (
         <li key={index}>
-          <BookItem book={book}/>
+          <BookItem book={book} onShelfChanged={this.shelfChanged}/>
         </li>
         )
       )}
