@@ -6,11 +6,15 @@ class BookItem extends Component {
     book: PropTypes.object.isRequired
   }
 
+  shelfChanged(event) {
+    this.props.onShelfChanged(event.target.value)
+  }
+
   render() {
 
-    const { bookCover, title, authors } = this.props.book
-    const style = {}
+    const { bookCover, title, authors, shelf } = this.props.book
 
+    const style = {}
     if(style) {
       style.width = bookCover.width
       style.height = bookCover.height
@@ -22,12 +26,12 @@ class BookItem extends Component {
         <div className="book-top">
           <div className="book-cover" style={style}></div>
           <div className="book-shelf-changer">
-            <select>
+            <select value={shelf} onChange={this.shelfChanged}>
               <option value="move" disabled>Move to...</option>
               <option value="currentlyReading">Currently Reading</option>
               <option value="wantToRead">Want to Read</option>
               <option value="read">Read</option>
-              <option value="none">None</option>
+              <option value="none" defaultValue>None</option>
             </select>
           </div>
         </div>
