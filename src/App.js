@@ -30,9 +30,8 @@ class BooksApp extends React.Component {
         newBook.bookCover = {
           backgroundImage: book.imageLinks.thumbnail,
           width: 128,
-          heigth: 193
+          height: 193
         }
-
         if (book.shelf === 'currentlyReading') {
           currently.push(newBook)
         } else if (book.shelf === 'wantToRead') {
