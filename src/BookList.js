@@ -1,16 +1,20 @@
 import React, { Component } from 'react'
-import Book from './Book'
+import PropTypes from 'prop-types'
+import BookItem from './BookItem'
 
 class BookList extends Component {
-
-  const { books } = this.props
+  static propTypes = {
+    books: PropTypes.array.isRequired
+  }
 
   render() {
+    const { books } = this.props
+
     return(
       <ol className="books-grid">
-      {books.map((book, index) => ({
-        <Book key={index}/>
-        })
+      {books.map((book, index) => (
+          <BookItem key={index} book={book}/>
+        )
       )}
       </ol>
     )
