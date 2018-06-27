@@ -5,15 +5,12 @@ import { Link } from 'react-router-dom'
 
 class MyReadsBookShelves extends Component {
   static propTypes = {
-    bookShelves: PropTypes.array.isRequired
-  }
-
-  shelfChanged(event) {
-    this.props.onShelfChanged(event.target.value)
+    bookShelves: PropTypes.array.isRequired,
+    onShelfChanged: PropTypes.func.isRequired
   }
 
   render() {
-    const { bookShelves } = this.props
+    const { bookShelves, onShelfChanged } = this.props
 
     return(
       <div className="list-books">
@@ -27,7 +24,7 @@ class MyReadsBookShelves extends Component {
                 key={index}
                 title={bookShelf.title}
                 books={bookShelf.books}
-                onShelfChanged={this.shelfChanged} />
+                onShelfChanged={onShelfChanged} />
             ))}
           </div>
         </div>

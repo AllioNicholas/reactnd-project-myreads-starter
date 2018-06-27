@@ -5,21 +5,18 @@ import BookList from './BookList'
 class Bookshelf extends Component {
   static propTypes = {
     books: PropTypes.array.isRequired,
+    onShelfChanged: PropTypes.func.isRequired,
     title: PropTypes.string
   }
 
-  shelfChanged(event) {
-    this.props.onShelfChanged(event.target.value)
-  }
-
   render() {
-    const { title, books } = this.props
+    const { title, books, onShelfChanged } = this.props
 
     return(
       <div className="bookshelf">
         <h2 className="bookshelf-title">{title}</h2>
         <div className="bookshelf-books">
-          <BookList books={books} onShelfChanged={this.shelfChanged}/>
+          <BookList books={books} onShelfChanged={onShelfChanged}/>
         </div>
       </div>
     )
