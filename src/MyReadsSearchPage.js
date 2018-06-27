@@ -65,9 +65,26 @@ class MyReadsSearchPage extends Component {
     }
   }
 
+  // Shelf changed
+  shelfChanged = (book, shelf) => {
+    const { retrievedBooks } = this.state
+
+    let changedBooks = []
+    for (let retrieved of retrievedBooks) {
+      if (retrieved.id === book.id) {
+        retrieved.shelf = shelf
+      }
+      changedBooks.push(retrieved)
+    }
+
+    this.setState(() => ({
+        retrievedBooks: changedBooks
+    }))
+    this.props.onShelfChanged(book, shelf)
+  }
+
   render() {
     const { query, retrievedBooks } = this.state
-    const { onShelfChanged } = this.props
 
     const showingBooks = query === ''
       ? []
@@ -89,7 +106,7 @@ class MyReadsSearchPage extends Component {
           </div>
         </div>
         <div className="search-books-results">
-          <BookList books={showingBooks} onShelfChanged={onShelfChanged}/>
+          <BookList books={showingBooks} onShelfChanged={this.shelfChanged}/>
         </div>
       </div>
     )
