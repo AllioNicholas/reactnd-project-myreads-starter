@@ -13,48 +13,61 @@ class BooksApp extends React.Component {
     readShelf: [],
   }
 
+  // Helper Methods
+  parseAndUpdateShelves = (books) => {
+    let currently = []
+    let wantTo = []
+    let read = []
+
+    for (let book of books) {
+      const newBook = {}
+
+      newBook.id= book.id
+      newBook.title = book.title
+      newBook.authors = book.authors
+      newBook.shelf = book.shelf
+      newBook.bookCover = {
+        backgroundImage: book.imageLinks.thumbnail,
+        width: 128,
+        height: 193
+      }
+
+      if (book.shelf === 'currentlyReading') {
+        currently.push(newBook)
+      } else if (book.shelf === 'wantToRead') {
+        wantTo.push(newBook)
+      } else if (book.shelf === 'read') {
+        read.push(newBook)
+      }
+    }
+
+    this.setState(() => ({
+        currentlyReadingShelf: currently,
+        wantToReadShelf: wantTo,
+        readShelf: read
+      }))
+  }
+
+  getAllBooks = () => {
+    BooksAPI.getAll()
+    .then((books) => {
+      this.parseAndUpdateShelves(books)
+    })
+  }
+
   // State handle methods
-  shelfChanged(event) {
-    console.log(event.target.value)
+  shelfChanged = (book, shelf) => {
+    BooksAPI.update(book, shelf)
+    .then((res) => {
+      if (res !== undefined) {
+        this.getAllBooks()
+      }
+    })
   }
 
   // Lifecycle methods
   componentDidMount() {
-    BooksAPI.getAll()
-    .then((books) => {
-      let currently = []
-      let wantTo = []
-      let read = []
-
-      books.map((book) => {
-        const newBook = {}
-
-        newBook.id= book.id
-        newBook.title = book.title
-        newBook.authors = book.authors
-        newBook.shelf = book.shelf
-        newBook.bookCover = {
-          backgroundImage: book.imageLinks.thumbnail,
-          width: 128,
-          height: 193
-        }
-
-        if (book.shelf === 'currentlyReading') {
-          currently.push(newBook)
-        } else if (book.shelf === 'wantToRead') {
-          wantTo.push(newBook)
-        } else if (book.shelf === 'read') {
-          read.push(newBook)
-        }
-
-      })
-
-      this.setState((prevState) => ({
-          currentlyReadingShelf: prevState.currentlyReadingShelf.concat(currently),
-          wantToReadShelf: prevState.wantToReadShelf.concat(wantTo),
-          readShelf: prevState.readShelf.concat(read)
-        }))
-    })
+    this.getAllBooks()
   }
 
   render() {
