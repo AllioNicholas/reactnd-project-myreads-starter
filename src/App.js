@@ -24,13 +24,15 @@ class BooksApp extends React.Component {
 
       newBook.id= book.id
       newBook.title = book.title
-      newBook.authors = book.authors
+      newBook.authors = book.authors !== undefined ? book.authors : []
       newBook.shelf = book.shelf
-      newBook.bookCover = {
+      newBook.bookCover = book.imageLinks !== undefined ?
+      {
         backgroundImage: book.imageLinks.thumbnail,
         width: 128,
         height: 193
       }
+      : {}
 
       if (book.shelf === 'currentlyReading') {
         currently.push(newBook)
@@ -89,7 +91,11 @@ class BooksApp extends React.Component {
 
     return (
       <div className="app">
-        <Route path='/search' component={MyReadsSearchPage} />
+        <Route path='/search' render={() => (
+          <MyReadsSearchPage
+            myBooks={[...currentlyReadingShelf, ...wantToReadShelf, ...readShelf]}
+            onShelfChanged={this.shelfChanged} />
+        )} />
         <Route exact path='/' render={() => (
           <MyReadsBookShelves
             bookShelves={bookShelves}
