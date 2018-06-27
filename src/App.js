@@ -11,6 +11,7 @@ class BooksApp extends React.Component {
     currentlyReadingShelf: [],
     wantToReadShelf: [],
     readShelf: [],
+    bookIdShelfId: {}
   }
 
   // Helper Methods
@@ -18,6 +19,8 @@ class BooksApp extends React.Component {
     let currently = []
     let wantTo = []
     let read = []
+
+    let idToShelf = {}
 
     for (let book of books) {
       const newBook = {}
@@ -34,6 +37,8 @@ class BooksApp extends React.Component {
       }
       : {}
 
+      idToShelf[newBook.id] = newBook.shelf
+
       if (book.shelf === 'currentlyReading') {
         currently.push(newBook)
       } else if (book.shelf === 'wantToRead') {
@@ -46,7 +51,8 @@ class BooksApp extends React.Component {
     this.setState(() => ({
         currentlyReadingShelf: currently,
         wantToReadShelf: wantTo,
-        readShelf: read
+        readShelf: read,
+        bookIdShelfId: idToShelf
       }))
   }
 
@@ -73,7 +79,7 @@ class BooksApp extends React.Component {
   }
 
   render() {
-    const { currentlyReadingShelf, wantToReadShelf, readShelf } = this.state
+    const { currentlyReadingShelf, wantToReadShelf, readShelf, bookIdShelfId } = this.state
     const bookShelves = [
       {
         title: 'Currently Reading',
@@ -93,6 +99,7 @@ class BooksApp extends React.Component {
       <div className="app">
         <Route path='/search' render={() => (
           <MyReadsSearchPage
+            booksOnShelves={bookIdShelfId}
             onShelfChanged={this.shelfChanged} />
         )} />
         <Route exact path='/' render={() => (

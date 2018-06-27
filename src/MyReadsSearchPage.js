@@ -8,28 +8,13 @@ import BookList from './BookList'
 
 class MyReadsSearchPage extends Component {
   static propTypes = {
+    booksOnShelves: PropTypes.object.isRequired,
     onShelfChanged: PropTypes.func.isRequired
   }
 
   state = {
     query: '',
     retrievedBooks: [],
-    shelfForBook: {}
-  }
-
-  // Component Lifecycle
-  componentWillMount() {
-    BooksAPI.getAll()
-    .then((books) => {
-      let idShelf = {}
-      for (let book of books) {
-        idShelf[book.id] = book.shelf
-      }
-
-      this.setState(() => ({
-        shelfForBook: idShelf
-      }))
-    })
   }
 
   // Query update
@@ -53,7 +38,7 @@ class MyReadsSearchPage extends Component {
           results = results["items"]
         }
 
-        const { shelfForBook } = this.state
+        const { booksOnShelves } = this.props
         let books = []
         for (let book of results) {
           const newBook = {}
@@ -61,7 +46,7 @@ class MyReadsSearchPage extends Component {
           newBook.id= book.id
           newBook.title = book.title
           newBook.authors = book.authors !== undefined ? book.authors : []
-          newBook.shelf = shelfForBook[book.id] ? shelfForBook[book.id] : 'none'
+          newBook.shelf = booksOnShelves[book.id] ? booksOnShelves[book.id] : 'none'
           newBook.bookCover = book.imageLinks !== undefined ?
           {
             backgroundImage: book.imageLinks.thumbnail,
