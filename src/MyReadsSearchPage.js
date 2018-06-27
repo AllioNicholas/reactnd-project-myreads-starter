@@ -8,7 +8,6 @@ import BookList from './BookList'
 
 class MyReadsSearchPage extends Component {
   static propTypes = {
-    myBooks: PropTypes.array.isRequired,
     onShelfChanged: PropTypes.func.isRequired
   }
 
@@ -20,8 +19,6 @@ class MyReadsSearchPage extends Component {
 
   // Component Lifecycle
   componentWillMount() {
-    const { myBooks } = this.props
-
     BooksAPI.getAll()
     .then((books) => {
       let idShelf = {}
